@@ -1,0 +1,28 @@
+<h1>Login Page</h1>
+<div class="alert alert-danger" *ngIf="warning">
+    {{warning}}
+</div>
+
+<form #f='ngForm' (ngSubmit)='onSubmit(f)'>
+    <div class="form-group">
+        <label class="control-label" for="userName" >Username:</label>
+        <input type="text" class="form-control" [class.is-invalid]="!userName.valid" id="userName" name="userName" placeholder="Enter a username" [(ngModel)]="userData.userName" pattern="[a-zA-Z0-9]*" #userName="ngModel"> 
+        <div *ngIf="userName.errors?.['pattern']">
+          <small class="text-danger">
+              <strong>Warning:</strong> Please enter only characters or numbers.
+          </small>
+        </div>
+    </div>
+
+      <div class="form-group">
+        <label class="control-label" for="password" [class.text-danger]="!password.valid">Password:</label>
+        <input type="password" class="form-control" [class.is-invalid]="!password.valid" id="password" name="password" placeholder="Password" [(ngModel)]="userData.password" pattern="[a-zA-Z0-9]*" #password="ngModel"> 
+        <div *ngIf="password.errors?.['pattern']">
+          <small class="text-danger">
+              <strong>Warning:</strong> Please enter only characters or numbers.
+          </small>
+        </div>
+      </div>
+
+    <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Login</button>
+</form>

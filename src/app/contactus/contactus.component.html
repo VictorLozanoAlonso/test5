@@ -1,0 +1,39 @@
+<h1>Contact Form</h1>
+<div class="alert alert-danger" *ngIf="warning">
+    {{warning}}
+</div>
+
+<form #f='ngForm' (ngSubmit)='onSubmit(f)'>
+    <div class="form-group">
+        <label class="control-label" for="name">Name:</label>
+        <input type="text" class="form-control" [class.is-invalid]="!name.valid" id="name" name="name"
+            placeholder="Enter your name here" [(ngModel)]="userData.name" pattern="[a-zA-Z0-9 ]*" #name="ngModel">
+        <div *ngIf="name.errors?.['pattern']">
+            <small class="text-danger">
+                <strong>Warning:</strong> Please enter only characters or numbers.
+            </small>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="email">Email:</label>
+        <input type="email" class="form-control" [class.is-invalid]="!email.valid" id="email" name="email"
+            placeholder="Enter your email" [(ngModel)]="userData.email"
+            pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" #email="ngModel">
+        <div *ngIf="email.errors?.['pattern']">
+            <small class="text-danger">
+                <strong>Warning:</strong> Please enter an email format "email@email.com".
+            </small>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="email">Message:</label>
+        <textarea class="form-control" id="msg" name="msg" [(ngModel)]="userData.msg" required #msg="ngModel"></textarea>
+        <div *ngIf="msg.errors?.['required']">
+            <small class="text-danger">
+                <strong>Warning:</strong> Please enter a message
+            </small>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Send!</button>
+
+</form>
